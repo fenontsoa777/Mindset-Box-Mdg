@@ -81,6 +81,68 @@
 }
 
 
+    .filter-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .book-card {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .book-card:hover {
+      transform: scale(1.02);
+    }
+
+    .book-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .book-content {
+      padding: 15px;
+    }
+
+    .book-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 10px;
+    }
+
+    .book-description {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 3px 8px;
+      font-size: 12px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+
+
+
+	  
+
 </style>
 
 
@@ -133,21 +195,23 @@ C’est que la version riche de toi-même t'appelle, et Mindset Box MDG est ta p
     
     </section>
 
-<section id="ebooks">
+
+<section id="books">
   <h2>📚 Nos Livres PDF</h2>
 
-  <div id="filters">
-    <select id="sortFilter">
-      <option value="alphabetical">🔤 A-Z</option>
-      <option value="popular">🔥 Populaires</option>
-      <option value="newest">🆕 Nouveaux</option>
+  <div class="filter-container">
+    <label for="filter">Trier par :</label>
+    <select id="filter">
+      <option value="alphabetique">Alphabétique</option>
+      <option value="populaire">Populaires</option>
+      <option value="nouveaux">Nouveaux</option>
     </select>
   </div>
 
-  <ul id="bookList">
-    <!-- La liste sera générée par JavaScript -->
-  </ul>
-	  </section>
+  <div class="book-grid" id="book-list">
+    <!-- Les livres seront générés ici -->
+  </div>
+</section>
 
 <section class="cta">
 
@@ -168,66 +232,74 @@ Clique ici pour commander ton pack via WhatsApp :</p>
 
 
 		
+
 <script>
   const books = [
     {
-      title: "Développement Personnel – Boostez votre vie",
-      url: "https://tonsite.com/livre1.pdf",
-      popularity: 80,
-      date: "2024-12-01"
+      title: "Devenir Millionnaire en 365 Jours",
+      description: "Un guide pratique pour transformer votre mentalité et votre portefeuille.",
+      image: "https://via.placeholder.com/300x400?text=Millionnaire",
+      badge: "Populaire"
     },
     {
-      title: "Réussir son business – 50 stratégies",
-      url: "https://tonsite.com/livre2.pdf",
-      popularity: 95,
-      date: "2023-10-10"
+      title: "Le Pouvoir du Focus",
+      description: "Apprenez à maîtriser votre attention pour atteindre vos objectifs.",
+      image: "https://via.placeholder.com/300x400?text=Focus",
+      badge: "Nouveau"
     },
     {
-      title: "Comment investir efficacement",
-      url: "https://tonsite.com/livre3.pdf",
-      popularity: 70,
-      date: "2025-01-15"
+      title: "Mindset de Leader",
+      description: "Développez l'attitude d’un véritable leader inspirant.",
+      image: "https://via.placeholder.com/300x400?text=Leader",
+      badge: "Populaire"
     },
     {
-      title: "Intelligence financière pour débutants",
-      url: "https://tonsite.com/livre4.pdf",
-      popularity: 85,
-      date: "2025-06-10"
+      title: "Routine des Gagnants",
+      description: "Les habitudes quotidiennes des entrepreneurs à succès.",
+      image: "https://via.placeholder.com/300x400?text=Routine",
+      badge: "Nouveau"
     }
   ];
 
-  const bookList = document.getElementById("bookList");
-  const sortFilter = document.getElementById("sortFilter");
+  function displayBooks(list) {
+    const container = document.getElementById("book-list");
+    container.innerHTML = "";
 
-  function renderBooks(list) {
-    bookList.innerHTML = "";
     list.forEach(book => {
-      const li = document.createElement("li");
-      li.innerHTML = `<a href="${book.url}" target="_blank">📘 ${book.title}</a>`;
-      bookList.appendChild(li);
+      const card = `
+        <div class="book-card">
+          <img src="${book.image}" alt="${book.title}" class="book-image" />
+          <div class="book-content">
+            <div class="book-title">${book.title}</div>
+            <div class="book-description">${book.description}</div>
+            <div class="badge">${book.badge}</div>
+          </div>
+        </div>
+      `;
+      container.innerHTML += card;
     });
   }
 
-  function sortBooks(criteria) {
+  function sortBooks(mode) {
     let sorted = [...books];
-    if (criteria === "alphabetical") {
+    if (mode === "alphabetique") {
       sorted.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (criteria === "popular") {
-      sorted.sort((a, b) => b.popularity - a.popularity);
-    } else if (criteria === "newest") {
-      sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (mode === "populaire") {
+      sorted = books.filter(b => b.badge === "Populaire");
+    } else if (mode === "nouveaux") {
+      sorted = books.filter(b => b.badge === "Nouveau");
     }
-    renderBooks(sorted);
+    displayBooks(sorted);
   }
 
-  // Initial display
-  sortBooks("alphabetical");
-
-  // Change on select
-  sortFilter.addEventListener("change", () => {
-    sortBooks(sortFilter.value);
+  document.getElementById("filter").addEventListener("change", (e) => {
+    sortBooks(e.target.value);
   });
+
+  // Initial load
+  displayBooks(books);
 </script>
+
 
 	
 </body>
