@@ -83,67 +83,7 @@
 
 </style>
 
-	
-<script>
-  const books = [
-    {
-      title: "Développement Personnel – Boostez votre vie",
-      url: "https://tonsite.com/livre1.pdf",
-      popularity: 80,
-      date: "2024-12-01"
-    },
-    {
-      title: "Réussir son business – 50 stratégies",
-      url: "https://tonsite.com/livre2.pdf",
-      popularity: 95,
-      date: "2023-10-10"
-    },
-    {
-      title: "Comment investir efficacement",
-      url: "https://tonsite.com/livre3.pdf",
-      popularity: 70,
-      date: "2025-01-15"
-    },
-    {
-      title: "Intelligence financière pour débutants",
-      url: "https://tonsite.com/livre4.pdf",
-      popularity: 85,
-      date: "2025-06-10"
-    }
-  ];
 
-  const bookList = document.getElementById("bookList");
-  const sortFilter = document.getElementById("sortFilter");
-
-  function renderBooks(list) {
-    bookList.innerHTML = "";
-    list.forEach(book => {
-      const li = document.createElement("li");
-      li.innerHTML = `<a href="${book.url}" target="_blank">📘 ${book.title}</a>`;
-      bookList.appendChild(li);
-    });
-  }
-
-  function sortBooks(criteria) {
-    let sorted = [...books];
-    if (criteria === "alphabetical") {
-      sorted.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (criteria === "popular") {
-      sorted.sort((a, b) => b.popularity - a.popularity);
-    } else if (criteria === "newest") {
-      sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
-    }
-    renderBooks(sorted);
-  }
-
-  // Initial display
-  sortBooks("alphabetical");
-
-  // Change on select
-  sortFilter.addEventListener("change", () => {
-    sortBooks(sortFilter.value);
-  });
- </script>
 
 
 
@@ -222,5 +162,73 @@ Clique ici pour commander ton pack via WhatsApp :</p>
 </section>
 
   </div>
+
+
+
+
+
+		
+<script>
+  const books = [
+    {
+      title: "Développement Personnel – Boostez votre vie",
+      url: "https://tonsite.com/livre1.pdf",
+      popularity: 80,
+      date: "2024-12-01"
+    },
+    {
+      title: "Réussir son business – 50 stratégies",
+      url: "https://tonsite.com/livre2.pdf",
+      popularity: 95,
+      date: "2023-10-10"
+    },
+    {
+      title: "Comment investir efficacement",
+      url: "https://tonsite.com/livre3.pdf",
+      popularity: 70,
+      date: "2025-01-15"
+    },
+    {
+      title: "Intelligence financière pour débutants",
+      url: "https://tonsite.com/livre4.pdf",
+      popularity: 85,
+      date: "2025-06-10"
+    }
+  ];
+
+  const bookList = document.getElementById("bookList");
+  const sortFilter = document.getElementById("sortFilter");
+
+  function renderBooks(list) {
+    bookList.innerHTML = "";
+    list.forEach(book => {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="${book.url}" target="_blank">📘 ${book.title}</a>`;
+      bookList.appendChild(li);
+    });
+  }
+
+  function sortBooks(criteria) {
+    let sorted = [...books];
+    if (criteria === "alphabetical") {
+      sorted.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (criteria === "popular") {
+      sorted.sort((a, b) => b.popularity - a.popularity);
+    } else if (criteria === "newest") {
+      sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+    renderBooks(sorted);
+  }
+
+  // Initial display
+  sortBooks("alphabetical");
+
+  // Change on select
+  sortFilter.addEventListener("change", () => {
+    sortBooks(sortFilter.value);
+  });
+</script>
+
+	
 </body>
 </html>
