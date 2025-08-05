@@ -230,13 +230,8 @@ Clique ici pour commander ton pack via WhatsApp :</p>
 
   </div>
 
-
-
-
-
-		
-
 <script>
+  let books = [];
 
   function displayBooks(list) {
     const container = document.getElementById("book-list");
@@ -273,11 +268,17 @@ Clique ici pour commander ton pack via WhatsApp :</p>
     sortBooks(e.target.value);
   });
 
-  // Initial load
-  displayBooks(books);
+  // ✅ Fetch books from external JSON
+  fetch("books.json")
+    .then(response => response.json())
+    .then(data => {
+      books = data;
+      displayBooks(books);
+    })
+    .catch(error => {
+      console.error("Erreur lors du chargement de books.json :", error);
+    });
 </script>
-
-
 	
 </body>
 </html>
