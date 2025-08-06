@@ -1,1 +1,80 @@
 
+            const books = [
+                {
+                    title: "Devenir Millionnaire en 365 Jours",
+                    description: "Un guide pratique pour transformer votre mentalité et votre portefeuille.",
+                    image: "https://i.pinimg.com/1200x/e0/44/9b/e0449ba35d02ceeebcbd6298da362df8.jpg",
+                    badge: "Populaire",
+                },
+                {
+                    title: "L'autoroute du millionaire",
+                    description: "Un livre de MJ Demarco, comment devenir millionnaire rapidement et intelligemment.",
+                    image: "https://i.pinimg.com/736x/f4/b6/79/f4b6798742d4a5adb9136b8ba72da535.jpg",
+                    badge: "Populaire",
+                },
+
+                {
+                    title: "La Psychologie de l'argent",
+                    description: "Un livre de Morgan Housel, Quelques lecons intoporelles sur la richesse, la cupidite et le bonheur.",
+                    image: "https://i.pinimg.com/1200x/e2/93/a7/e293a7d11d56e905630107410c8d2101.jpg",
+                    badge: "Populaire",
+                },
+
+                {
+                    title: "Le Pouvoir du Focus",
+                    description: "Apprenez à maîtriser votre attention pour atteindre vos objectifs.",
+                    image: "https://i.pinimg.com/1200x/84/4c/79/844c79bd44e61de39111581f64e89f10.jpg",
+                    badge: "Nouveau",
+                },
+                {
+                    title: "Mindset de Leader",
+                    description: "Développez l'attitude d’un véritable leader inspirant.",
+                    image: "https://i.pinimg.com/736x/9e/33/91/9e3391c9ff9bc29bc23bc8e41a28e401.jpg",
+                    badge: "Populaire",
+                },
+                {
+                    title: "Routine des Gagnants",
+                    description: "Les habitudes quotidiennes des entrepreneurs à succès.",
+                    image: "https://i.pinimg.com/1200x/c5/00/23/c500236fbfcf92966d55a86caac557d6.jpg",
+                    badge: "Nouveau",
+                },
+            ];
+
+            function displayBooks(list) {
+                const container = document.getElementById("book-list");
+                container.innerHTML = "";
+
+                list.forEach((book) => {
+                    const card = `
+                    <div class="book-card">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                    	<img src="${book.image}" alt="${book.title}" class="book-image" />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+                        	<div class="book-content">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                            	<div class="book-title">${book.title}</div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+                                	<div class="book-description">${book.description}</div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                                     	<div class="badge">${book.badge}</div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+                            </div>
+                    </div>
+                 `;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                    container.innerHTML += card;
+                });
+            }
+
+            function sortBooks(mode) {
+                let sorted = [...books];
+                if (mode === "alphabetique") {
+                    sorted.sort((a, b) => a.title.localeCompare(b.title));
+                } else if (mode === "populaire") {
+                    sorted = books.filter((b) => b.badge === "Populaire");
+                } else if (mode === "nouveaux") {
+                    sorted = books.filter((b) => b.badge === "Nouveau");
+                }
+                displayBooks(sorted);
+            }
+
+            document.getElementById("filter").addEventListener("change", (e) => {
+                sortBooks(e.target.value);
+            });
+
+            // Initial load
+            displayBooks(books);
